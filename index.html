@@ -18,6 +18,7 @@
       <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#catalog">Каталог</a></li>
+          <li class="nav-item"><a class="nav-link" href="#cart">Кошик</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">Про магазин</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacts">Контакти</a></li>
         </ul>
@@ -46,6 +47,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Хліб домашній</h5>
             <p class="card-text">25 грн</p>
+            <button class="btn btn-success add-to-cart" data-name="Хліб домашній" data-price="25">В кошик</button>
           </div>
         </div>
       </div>
@@ -55,6 +57,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Булочка з маком</h5>
             <p class="card-text">15 грн</p>
+            <button class="btn btn-success add-to-cart" data-name="Булочка з маком" data-price="15">В кошик</button>
           </div>
         </div>
       </div>
@@ -69,6 +72,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Молоко свіже</h5>
             <p class="card-text">30 грн</p>
+            <button class="btn btn-success add-to-cart" data-name="Молоко свіже" data-price="30">В кошик</button>
           </div>
         </div>
       </div>
@@ -78,6 +82,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Сир домашній</h5>
             <p class="card-text">80 грн/кг</p>
+            <button class="btn btn-success add-to-cart" data-name="Сир домашній" data-price="80">В кошик</button>
           </div>
         </div>
       </div>
@@ -92,6 +97,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Яблука садові</h5>
             <p class="card-text">20 грн/кг</p>
+            <button class="btn btn-success add-to-cart" data-name="Яблука садові" data-price="20">В кошик</button>
           </div>
         </div>
       </div>
@@ -101,56 +107,18 @@
           <div class="card-body text-center">
             <h5 class="card-title">Помідори свіжі</h5>
             <p class="card-text">35 грн/кг</p>
+            <button class="btn btn-success add-to-cart" data-name="Помідори свіжі" data-price="35">В кошик</button>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- М'ясо -->
-    <h3 class="mt-4">М'ясо</h3>
-    <div class="row g-4">
-      <div class="col-md-3 col-6">
-        <div class="card shadow-sm">
-          <img src="images/meat.jpg" class="card-img-top img-fluid" alt="М'ясо">
-          <div class="card-body text-center">
-            <h5 class="card-title">Свинина свіжа</h5>
-            <p class="card-text">120 грн/кг</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-6">
-        <div class="card shadow-sm">
-          <img src="images/chicken.jpg" class="card-img-top img-fluid" alt="Курятина">
-          <div class="card-body text-center">
-            <h5 class="card-title">Курятина домашня</h5>
-            <p class="card-text">95 грн/кг</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Напої -->
-    <h3 class="mt-4">Напої</h3>
-    <div class="row g-4">
-      <div class="col-md-3 col-6">
-        <div class="card shadow-sm">
-          <img src="images/juice.jpg" class="card-img-top img-fluid" alt="Сік">
-          <div class="card-body text-center">
-            <h5 class="card-title">Яблучний сік</h5>
-            <p class="card-text">40 грн/л</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-6">
-        <div class="card shadow-sm">
-          <img src="images/water.jpg" class="card-img-top img-fluid" alt="Вода">
-          <div class="card-body text-center">
-            <h5 class="card-title">Мінеральна вода</h5>
-            <p class="card-text">20 грн/л</p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- Кошик -->
+  <section class="container my-5" id="cart">
+    <h2 class="text-center mb-4">Кошик</h2>
+    <ul id="cart-items" class="list-group"></ul>
+    <p class="mt-3 fw-bold">Загальна сума: <span id="cart-total">0</span> грн</p>
   </section>
 
   <!-- Про магазин -->
@@ -180,3 +148,28 @@
 
   <!-- Футер -->
   <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2026 Магазин "Поляна"</p>
+  </footer>
+
+  <!-- JavaScript для кошика -->
+  <script>
+    let cart = [];
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const name = button.getAttribute('data-name');
+        const price = parseFloat(button.getAttribute('data-price'));
+        cart.push({name, price});
+        updateCart();
+      });
+    });
+
+    function updateCart() {
+      const cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        const li = document.createElement('li');
+        li.className = 'list
